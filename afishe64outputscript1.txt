@@ -1,0 +1,102 @@
+Warning: Using a password on the command line interface can be insecure.
+--------------
+SHOW DATABASES
+--------------
+
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| afishe64assign2db  |
+| mysql              |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+--------------
+DROP DATABASE IF EXISTS afishe64assign2db
+--------------
+
+Query OK, 6 rows affected (0.09 sec)
+
+--------------
+CREATE DATABASE afishe64assign2db
+--------------
+
+Query OK, 1 row affected (0.00 sec)
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+GRANT ALL PRIVILEGES ON afishe64assign2db.* TO 'ta'@'localhost'
+--------------
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+Query OK, 0 rows affected (0.01 sec)
+
+--------------
+SHOW TABLES
+--------------
+
+Empty set (0.00 sec)
+
+--------------
+CREATE TABLE westernCourses (courseName VARCHAR(50) NOT NULL,weight FLOAT NOT NULL, suffix VARCHAR(3), courseNum CHAR(6) NOT NULL, PRIMARY KEY(coursenum))
+--------------
+
+Query OK, 0 rows affected (0.04 sec)
+
+--------------
+CREATE TABLE universities (universityNum INT NOT NULL, officialName VARCHAR(50) NOT NULL, city VARCHAR(20) NOT NULL, provinceCode VARCHAR(20) NOT NULL, nickname VARCHAR(20) NOT NULL, PRIMARY KEY(universityNum))
+--------------
+
+Query OK, 0 rows affected (0.04 sec)
+
+--------------
+CREATE TABLE outsideCourses (courseCode VARCHAR(20) NOT NULL, courseName VARCHAR(50) NOT NULL, weight FLOAT NOT NULL, yearOfStudents INT NOT NULL, universityNum INT NOT NULL, PRIMARY KEY(courseCode, universityNum), FOREIGN KEY(universityNum) REFERENCES universities(universityNum))
+--------------
+
+Query OK, 0 rows affected (0.06 sec)
+
+--------------
+CREATE TABLE equivalent (westernCourseNum CHAR(6) NOT NULL, outsideCourseCode VARCHAR(20) NOT NULL, universityNum INT NOT NULL, date DATE NOT NULL, PRIMARY KEY(westernCourseNum, outsideCourseCode, universityNum), FOREIGN KEY(westernCourseNum) REFERENCES westernCourses(courseNum), FOREIGN KEY(outsideCourseCode, universityNum) REFERENCES outsideCourses(courseCode, universityNum) ON DELETE CASCADE)
+--------------
+
+Query OK, 0 rows affected (0.12 sec)
+
+--------------
+SHOW TABLES
+--------------
+
++-----------------------------+
+| Tables_in_afishe64assign2db |
++-----------------------------+
+| equivalent                  |
+| outsideCourses              |
+| universities                |
+| westernCourses              |
++-----------------------------+
+4 rows in set (0.00 sec)
+
+Bye
